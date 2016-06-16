@@ -6,6 +6,8 @@
 package it.java858.todoapp.service;
 
 import it.java858.todoapp.entity.Categoria;
+import it.java858.todoapp.service.event.CategoriaEventListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -15,7 +17,18 @@ import javax.persistence.EntityManager;
  */
 public class CategoriaService {
 
-    public CategoriaService() {
+    private static List<CategoriaEventListener> listeners = new ArrayList<>();
+
+    private CategoriaService() {
+    }
+
+    /**
+     * aggiunge l' ascoltatore alla lista
+     *
+     * @param listener
+     */
+    public static void addCategoriaEventListenr(CategoriaEventListener listener) {
+        listeners.add(listener);
     }
 
     public static Categoria save(Categoria c) {
@@ -23,6 +36,13 @@ public class CategoriaService {
         em.getTransaction().begin();
         Categoria saved = em.merge(c);
         em.getTransaction().commit();
+        for (CategoriaEventListener listener : listeners) {
+            if (c.getId() == null) {
+                listener.onCreate(saved);
+            } else {
+                listener.onUpdate(saved);
+            }
+        }
         return saved;
 
     }
@@ -32,6 +52,10 @@ public class CategoriaService {
         em.getTransaction().begin();
         em.remove(c);
         em.getTransaction().commit();
+        //richiama il metodo onElimina su tutti glia ascoltatori iscritti
+        for (CategoriaEventListener listener : listeners) {
+            listener.onDelete(c);
+        }
     }
 
     public static List<Categoria> findAll() {

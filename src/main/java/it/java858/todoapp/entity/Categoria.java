@@ -19,10 +19,10 @@ import javax.persistence.Id;
 public class Categoria implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String nome;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
