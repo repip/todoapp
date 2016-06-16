@@ -5,12 +5,18 @@
  */
 package it.java858.todoapp.gui;
 
+import it.java858.todoapp.gui.model.CategoriaTM;
+import it.java858.todoapp.entity.Categoria;
+import it.java858.todoapp.service.CategoriaService;
+import javax.swing.ListSelectionModel;
+
 /**
  *
  * @author tss
  */
 public class Main extends javax.swing.JFrame {
 
+   
     /**
      * Creates new form Main
      */
@@ -27,8 +33,8 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scroll = new javax.swing.JScrollPane();
+        tblcat = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuEsci = new javax.swing.JMenuItem();
@@ -38,7 +44,7 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblcat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -49,9 +55,15 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        scroll.setViewportView(tblcat);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(scroll, java.awt.BorderLayout.CENTER);
+
+        jMenuBar1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jMenuBar1FocusGained(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -95,7 +107,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuEsciActionPerformed
 
     private void mnucreacategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnucreacategoriaActionPerformed
-        CategoriaEdit edit = new CategoriaEdit(this, true);
+        CategoriaEdit edit = new CategoriaEdit(new Categoria(),this, true);
         edit.setLocationRelativeTo(this);
         edit.setVisible(true);
     }//GEN-LAST:event_mnucreacategoriaActionPerformed
@@ -106,15 +118,19 @@ public class Main extends javax.swing.JFrame {
         crud.setVisible(true);
     }//GEN-LAST:event_mnugestcategorieActionPerformed
 
+    private void jMenuBar1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jMenuBar1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuBar1FocusGained
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem mnuEsci;
     private javax.swing.JMenuItem mnucreacategoria;
     private javax.swing.JMenuItem mnugestcategorie;
+    private javax.swing.JScrollPane scroll;
+    private javax.swing.JTable tblcat;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,14 +15,32 @@ import javax.swing.JOptionPane;
  */
 public class CategoriaEdit extends javax.swing.JDialog {
 
+    private Categoria categoria;
+
     /**
      * Creates new form CategoriaEdit
      */
-    public CategoriaEdit(java.awt.Frame parent, boolean modal) {
+    public CategoriaEdit(Categoria categoria, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        init(categoria);
     }
 
+    public CategoriaEdit(Categoria categoria, java.awt.Dialog parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+        init(categoria);
+    }
+    
+    //visualizza a categoria
+    public void modelToview(){
+        txtnome.setText(categoria.getNome());
+    }
+    
+    //salva info video to categoria
+    public void viewTomodel(){
+        categoria.setNome(txtnome.getText());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,10 +114,8 @@ public class CategoriaEdit extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdsalvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdsalvaActionPerformed
-        Categoria newc = new Categoria();
-        newc.setNome(txtnome.getText());
-
-        CategoriaService.save(newc);
+        viewTomodel();
+        CategoriaService.save(categoria);
         JOptionPane.showMessageDialog(this, "Categoria salvata");
         close();
     }//GEN-LAST:event_cmdsalvaActionPerformed
@@ -116,44 +132,7 @@ public class CategoriaEdit extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CategoriaEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CategoriaEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CategoriaEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CategoriaEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CategoriaEdit dialog = new CategoriaEdit(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdannulla;
@@ -162,4 +141,10 @@ public class CategoriaEdit extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtnome;
     // End of variables declaration//GEN-END:variables
+
+    private void init(Categoria categoria) {
+        this.categoria=categoria;
+        txtnome.setText(categoria.getNome());
+        modelToview();
+    }
 }
