@@ -8,13 +8,15 @@ package it.java858.todoapp.gui;
 import it.java858.todoapp.gui.model.CategoriaTM;
 import it.java858.todoapp.entity.Categoria;
 import it.java858.todoapp.service.CategoriaService;
+import it.java858.todoapp.service.event.CategoriaEventListener;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author tss
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements CategoriaEventListener{
 
    
     /**
@@ -22,6 +24,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        CategoriaService.addCategoriaEventListenr(this);
     }
 
     /**
@@ -133,4 +136,19 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane scroll;
     private javax.swing.JTable tblcat;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onCreate(Categoria c) {
+        JOptionPane.showMessageDialog(this, "Categoria Aggiunta");
+    }
+
+    @Override
+    public void onUpdate(Categoria c) {
+        JOptionPane.showMessageDialog(this, "Categoria Salvata");
+    }
+
+    @Override
+    public void onDelete(Categoria c) {
+        JOptionPane.showMessageDialog(this, "Categoria Cancellata");
+    }
 }
