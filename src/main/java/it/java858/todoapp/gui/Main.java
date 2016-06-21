@@ -7,8 +7,13 @@ package it.java858.todoapp.gui;
 
 import it.java858.todoapp.gui.model.CategoriaTM;
 import it.java858.todoapp.entity.Categoria;
+import it.java858.todoapp.entity.ToDo_;
+import it.java858.todoapp.gui.model.ToDoTM;
 import it.java858.todoapp.service.CategoriaService;
+import it.java858.todoapp.service.ToDoService;
 import it.java858.todoapp.service.event.CategoriaEventListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
@@ -16,15 +21,19 @@ import javax.swing.ListSelectionModel;
  *
  * @author tss
  */
-public class Main extends javax.swing.JFrame implements CategoriaEventListener{
+public class Main extends javax.swing.JFrame implements CategoriaEventListener {
 
-   
+    
+    ToDoTM todotm;
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
         CategoriaService.addCategoriaEventListenr(this);
+        todotm = new ToDoTM(ToDoService.findAll());
+        tblcat.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblcat.setModel(todotm);
     }
 
     /**
@@ -110,7 +119,7 @@ public class Main extends javax.swing.JFrame implements CategoriaEventListener{
     }//GEN-LAST:event_mnuEsciActionPerformed
 
     private void mnucreacategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnucreacategoriaActionPerformed
-        CategoriaEdit edit = new CategoriaEdit(new Categoria(),this, true);
+        CategoriaEdit edit = new CategoriaEdit(new Categoria(), this, true);
         edit.setLocationRelativeTo(this);
         edit.setVisible(true);
     }//GEN-LAST:event_mnucreacategoriaActionPerformed
@@ -124,6 +133,7 @@ public class Main extends javax.swing.JFrame implements CategoriaEventListener{
     private void jMenuBar1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jMenuBar1FocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuBar1FocusGained
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

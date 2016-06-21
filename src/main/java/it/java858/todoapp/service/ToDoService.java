@@ -5,7 +5,9 @@
  */
 package it.java858.todoapp.service;
 
+import it.java858.todoapp.entity.Categoria;
 import it.java858.todoapp.entity.ToDo;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -26,4 +28,10 @@ public class ToDoService {
 
     }
 
+    public static List<ToDo> findAll() {
+        EntityManager em = DbService.getEm();
+        List<ToDo> listtodo;
+        listtodo = em.createQuery("select t from ToDo t order by t.testo", ToDo.class).getResultList();
+        return listtodo;
+    }
 }
